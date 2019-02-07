@@ -21,7 +21,7 @@ dA(Length, [H|T], Leftover) :- isD(H),
   dA(L, T, Leftover),
   Length is L + 1.
 
-dA(0, Leftover, Leftover).
+lA(0, Leftover, Leftover).
 lA(Length, [H|T], Leftover) :- isL(H),
   lA(L, T, Leftover),
   Length is L + 1.
