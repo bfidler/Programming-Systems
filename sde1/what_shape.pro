@@ -62,7 +62,15 @@ rctA(In, Leftover) :-
   dA(X, D, L),
   lA(Y, L, Leftover).
 
-/*GRECT HERE*/
+/*Generate Rectangle Predicate.
+  A is height.
+  B is width.*/
+
+grect(A, B, C) :-
+  uA(A, C, R),
+  rA(B, R, D),
+  dA(A, D, L),
+  lA(B, L, []).
 
 /*Diagonal Predicates have same functionality as uA, etc.*/
 
@@ -71,7 +79,6 @@ m30A(Length, ["m30"|T], Leftover) :-
   m30A(L, T, Leftover),
   Length is L + 1.
 
-p240A(1, ["p240"|Leftover], Leftover).
 p240A(Length, ["p240"|T], Leftover) :-
   p240A(L, T, Leftover),
   Length is L + 1.
@@ -82,3 +89,20 @@ eqtriA(In, Leftover) :-
   uA(L, In, M30),
   m30A(L, M30, P240),
   p240A(L, P240, Leftover).
+
+/*One shift Predicate - shifts lifts one char to the left*/
+
+one_shift([H|T], R) :- append(T, [H], R).
+
+/*All Shifts Predicate - every shift of A except itself.*/
+
+all_shifts(A, [], L, L) :- length(A, L), L > 0.
+all_shifts(A, [A1|T], L, S) :- one_shift(A, A1), S1 is S+1, all_shifts(A1, T, L, S1).
+
+/*Start Shifts Predicate - shows all shifts of the List.*/
+
+start_shifts(List, AS) :- length(List, Len), all_shifts(List, AS, Len, 1).
+
+/*All Cases Predicate - all shifts plus the list.*/
+
+all_cases(A, R) :- start_shifts(A, Shifts), append(Shifts, [A], R).
