@@ -3,7 +3,7 @@
 
 theList(0,[]).
 
-theList(N,[N|T]) :- NM1 is N-1, theList(NM1,T).
+theList(N,[N|T]) :- theList(N-1,T).
 
 /*
 ?- ['list_generate.pro'].

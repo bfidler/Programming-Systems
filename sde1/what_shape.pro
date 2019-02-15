@@ -79,6 +79,7 @@ m30A(Length, ["m30"|T], Leftover) :-
   m30A(L, T, Leftover),
   Length is L + 1.
 
+p240A(1, ["p240"|Leftover], Leftover).
 p240A(Length, ["p240"|T], Leftover) :-
   p240A(L, T, Leftover),
   Length is L + 1.
@@ -97,12 +98,47 @@ one_shift([H|T], R) :- append(T, [H], R).
 /*All Shifts Predicate - every shift of A except itself.*/
 
 all_shifts(A, [], L, L) :- length(A, L), L > 0.
-all_shifts(A, [A1|T], L, S) :- one_shift(A, A1), S1 is S+1, all_shifts(A1, T, L, S1).
+all_shifts(A, [A1|T], L, S) :-
+  one_shift(A, A1),
+  S1 is S+1,
+  all_shifts(A1, T, L, S1).
 
 /*Start Shifts Predicate - shows all shifts of the List.*/
 
-start_shifts(List, AS) :- length(List, Len), all_shifts(List, AS, Len, 1).
+start_shifts(List, AS) :-
+  length(List, Len),
+  all_shifts(List, AS, Len, 1), !.
 
 /*All Cases Predicate - all shifts plus the list.*/
 
-all_cases(A, R) :- start_shifts(A, Shifts), append(Shifts, [A], R).
+all_cases(A, R) :-
+  start_shifts(A, Shifts),
+  append(Shifts, [A], R).
+
+/*Try All Squares - succeeds if one of the cases in the list is a Square*/
+
+try_all_sqA([Case|_]) :-
+  sqA(Case, []),
+  nl,
+  write("cyclic shift: "), writeq(Case), write(" is a square"),
+  nl.
+try_all_sqA([_|T]) :- try_all_sqA(T).
+
+/*Try All Rectangles - succeeds if one of the cases in the list is a Rectangle*/
+
+try_all_rctA([Case|_]) :-
+  rctA(Case, []),
+  nl,
+  write("cyclic shift: "), writeq(Case), write(" is a rectangle"),
+  nl, nl.
+try_all_rctA([_|T]) :- try_all_rctA(T).
+
+/*Try All Equilateral Triangles - succeeds if one of the cases in the list is an
+  Equilateral Triangle*/
+
+try_all_eqtriA([Case|_]) :-
+  eqtriA(Case, []),
+  nl,
+  write("cyclic shift: "), writeq(Case), write(" is an equilateral triangle"),
+  nl, nl.
+try_all_eqtriA([_|T]) :- try_all_eqtriA(T).
