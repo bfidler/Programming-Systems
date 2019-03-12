@@ -1,0 +1,25 @@
+(*gen_string*)
+let rec gen_string = function (n, what) ->
+if n==0 then []
+        else
+        what :: gen_string (n-1, what) ;;
+
+(*gen_square*)
+let gen_square = function (n) ->
+  (gen_string(n, "u")@gen_string(n, "r")@
+  gen_string(n, "d")@gen_string(n, "l"));;
+
+(*gen_rect*)
+let gen_rect = function (n, m) ->
+  (gen_string(n, "u")@gen_string(m, "r")@
+  gen_string(n, "d")@gen_string(m, "l"));;
+
+                                                   
+
+
+
+
+
+
+
+(*Match N******)
