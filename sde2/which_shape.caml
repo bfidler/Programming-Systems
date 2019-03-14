@@ -14,12 +14,32 @@ let gen_rect = function (n, m) ->
   (gen_string(n, "u")@gen_string(m, "r")@
   gen_string(n, "d")@gen_string(m, "l"));;
 
-                                                   
+(*countups*)
+let rec countups = function(alist, n) ->
+  if (alist = []) then n
+    else
+    if (List.hd alist) = "u"
+      then countups(List.tl alist, n + 1)
+      else countups(List.tl alist, n);;
+
+(*consec_counts*)
+let rec consec_counts = function(alist, count, what) ->
+  if alist = [] then ([], count)
+    else if (List.hd alist) = what
+      then consec_counts(List.tl alist, count + 1, what)
+      else (alist, count);;
+
+(*sq*)
+let sq = function(alist) ->
+  
+
+(*skipping a few functions here*)
 
 
+(*one_shift*)
+let one_shift = function (alist) ->
+  List.tl alist@[List.hd alist];;
 
-
-
-
+(*)
 
 (*Match N******)
