@@ -29,9 +29,15 @@ let rec consec_counts = function(alist, count, what) ->
       then consec_counts(List.tl alist, count + 1, what)
       else (alist, count);;
 
+
 (*sq*)
-let sq = function(alist) ->
-  
+
+
+
+
+(*sq_all*)
+
+
 
 (*skipping a few functions here*)
 
@@ -40,6 +46,8 @@ let sq = function(alist) ->
 let one_shift = function (alist) ->
   List.tl alist@[List.hd alist];;
 
-(*)
 
 (*Match N******)
+
+
+(*Auxilary functions*)
