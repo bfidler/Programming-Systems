@@ -29,13 +29,38 @@ let rec consec_counts = function(alist, count, what) ->
       then consec_counts(List.tl alist, count + 1, what)
       else (alist, count);;
 
+(*Auxiliary Functions for sq*)
+let remainder = function(list, count) -> list;;
+
+let length = function(list, count) -> count;;
+
+let sq_l = function(alist) ->
+  if(length (consec_counts(alist, 0, "l")) > 0)
+    then true
+    else false;;
+
+let sq_d = function(alist) ->
+  if(length (consec_counts(alist, 0, "d")) > 0)
+    then sq_l(remainder(consec_counts(alist, 0, "d")))
+    else false;;
+
+let sq_r = function(alist) ->
+  if(length (consec_counts(alist, 0, "r")) > 0)
+    then sq_d(remainder(consec_counts(alist, 0, "r")))
+    else false;;
+
+
+let sq_u = function(alist) ->
+  if(length (consec_counts(alist, 0, "u")) > 0)
+    then sq_r(remainder(consec_counts(alist, 0, "u")))
+    else false;;
 
 (*sq*)
+let sq = function(alist) ->
+  sq_u(alist);;
 
 
-
-
-(*sq_all*)
+(*sq_all - use same aux functions but add _all and check for empty list on last one*)
 
 
 
