@@ -60,19 +60,118 @@ let sq = function(alist) ->
   sq_u(alist);;
 
 
-(*sq_all - use same aux functions but add _all and check for empty list on last one*)
+(*auxilary functions for sq_all*)
+let sq_all_l = function(alist) ->
+  if(length (consec_counts(alist, 0, "l")) > 0 && 
+    remainder(consec_counts(alist,0, "l")) = [])
+    then true
+    else false;;
+
+let sq_all_d = function(alist) ->
+  if(length (consec_counts(alist, 0, "d")) > 0)
+    then sq_all_l(remainder(consec_counts(alist, 0, "d")))
+    else false;;
+
+let sq_all_r = function(alist) ->
+  if(length (consec_counts(alist, 0, "r")) > 0)
+    then sq_all_d(remainder(consec_counts(alist, 0, "r")))
+    else false;;
 
 
+let sq_all_u = function(alist) ->
+  if(length (consec_counts(alist, 0, "u")) > 0)
+    then sq_all_r(remainder(consec_counts(alist, 0, "u")))
+    else false;;
 
-(*skipping a few functions here*)
+(*sq_all*)
+let sq_all = function(alist) ->
+  sq_all_u(alist);;
 
+(*auxilary functions for sqA*)
+let rec total_counts = function(alist, n, what) ->
+  if (alist = []) then n
+    else
+    if (List.hd alist) = what
+      then total_counts(List.tl alist, n + 1, what)
+      else total_counts(List.tl alist, n, what);;
+
+(*sqA*)
+let sqA = function(alist) ->
+  if(sq_all(alist) &&
+    total_counts(alist, 0, "u") = total_counts(alist, 0, "r") &&
+    total_counts(alist, 0, "u") = total_counts(alist, 0, "d") &&
+    total_counts(alist, 0, "u") = total_counts(alist, 0, "l"))
+	then true
+	else false;;	
+
+(*auxilary functions for eqtriA*)
+let eqtri_all_p240 = function(alist) ->
+  if(length (consec_counts(alist, 0, "p240")) > 0 && 
+    remainder(consec_counts(alist,0, "p240")) = [])
+    then true
+    else false;;
+
+let eqtri_all_m30 = function(alist) ->
+  if(length (consec_counts(alist, 0, "m30")) > 0)
+    then eqtri_all_p240(remainder(consec_counts(alist, 0, "m30")))
+    else false;;
+
+let eqtri_all_u = function(alist) ->
+  if(length (consec_counts(alist, 0, "u")) > 0)
+    then eqtri_all_m30(remainder(consec_counts(alist, 0, "u")))
+    else false;;
+
+let eqtri_all = function(alist) ->
+  eqtri_all_u(alist);;
+
+let eqtriA = function(alist) ->
+  if(eqtri_all(alist) &&
+    total_counts(alist, 0, "u") = total_counts(alist, 0, "m30") &&
+    total_counts(alist, 0, "u") = total_counts(alist, 0, "p240"))
+	then true
+	else false;;	
 
 (*one_shift*)
 let one_shift = function (alist) ->
   List.tl alist@[List.hd alist];;
 
+(*auxilary functions for all_shifts*)
+let rec reverse = function(alist) -> 
+  if((List.tl alist) == []) then alist
+    else (reverse (List. tl alist)) @ [List.hd alist];;
 
-(*Match N******)
+let rec do_all_shifts = function(alist, shiftlist, n) ->
+ if (n = 0)
+   then shiftlist
+   else do_all_shifts(one_shift(alist), one_shift(alist)::shiftlist, n-1);;
 
+(*all_shifts*)
+let all_shifts = function(alist) ->
+  reverse(do_all_shifts(alist, [], List.length alist - 1));;
 
-(*Auxilary functions*)
+(*all_cases*)
+let all_cases = function(alist) ->
+  alist::all_shifts(alist);;
+
+(*auxilary functions for try_all_sqA*)
+let rec test_sqA = function(alist) ->
+  if (alist = []) then false
+    else if (sqA(List.hd alist))
+      then true
+      else (test_sqA(List.tl alist));;
+
+(*try_all_sqA*)
+let try_all_sqA = function(alist) ->
+  test_sqA(all_cases(alist));;
+
+(*auxilary functions for try_all_eqtriA*)
+let rec test_eqtriA = function(alist) ->
+  if (alist = []) then false
+    else if (eqtriA(List.hd alist))
+      then true
+      else (test_eqtriA(List.tl alist));;
+
+(*try_all_eqtriA*)
+let try_all_eqtriA = function(alist) ->
+  test_eqtriA(all_cases(alist));;
+
