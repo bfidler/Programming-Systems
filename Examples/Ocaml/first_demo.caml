@@ -1,0 +1,16 @@
+(* first demo for class *)
+
+open List;; (* can't use this in SDE 2-- call as List.hd, etc.  *)
+
+let rec demo1 = function (avector) ->
+  avector;;
+
+let rec demo2 = function (avector) ->
+  avector@avector;;
+
+let rec demo3 = function (v1,v2) ->
+ (hd v1) + (hd v2) ;;
+
+let rec demo4 = function (v1,v2) ->
+ ((hd v1) + (hd v2))::demo4((tl v1),(tl v2));;
+

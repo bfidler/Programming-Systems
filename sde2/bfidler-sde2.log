@@ -1,0 +1,61 @@
+# gen_string(4, "r");;
+- : string list = ["r"; "r"; "r"; "r"]
+# gen_string(3, "l");;
+- : string list = ["l"; "l"; "l"]
+
+# gen_square(4);;
+- : string list =
+["u"; "u"; "u"; "u"; "r"; "r"; "r"; "r"; "d"; "d"; "d"; "d"; "l"; "l"; "l";
+ "l"]
+# gen_square(2);;
+- : string list = ["u"; "u"; "r"; "r"; "d"; "d"; "l"; "l"]
+
+# gen_rect(2,3);;
+- : string list = ["u"; "u"; "r"; "r"; "r"; "d"; "d"; "l"; "l"; "l"]
+# gen_rect(3,2);;
+- : string list = ["u"; "u"; "u"; "r"; "r"; "d"; "d"; "d"; "l"; "l"]
+
+# countups(["a";"u";"a"], 0);;
+- : int = 1
+# countups(["u";"u"], 0);;
+- : int = 2
+
+# consec_counts(["u";"u";"r"], 0, "u");;
+- : string list * int = (["r"], 2)
+# consec_counts(["u";"u";"u"], 0, "u");;
+- : string list * int = ([], 3)
+
+# sq(["u";"r";"d";"l";"l"]);;
+- : bool = true
+# sq(["u";"d";"l"]);;
+- : bool = false
+
+# sq_all(["u";"r";"d";"l";"l"]);;
+- : bool = true
+# sq_all(["u";"r";"d";"l";"u"]);;
+- : bool = false
+
+# sqA(["u";"r";"d";"l"]);;
+- : bool = true
+# sqA(["u";"r";"d";"l";"l"]);;
+- : bool = false
+
+# eqtriA(["u";"u";"u";"m30";"m30";"m30";"p240";"p240";"p240"]);;
+- : bool = true
+# eqtriA(["u";"u";"m30";"p240"]);;
+- : bool = false
+
+# one_shift(["a";"b";"c"]);;
+- : string list = ["b"; "c"; "a"]
+# one_shift([5;4;3;2;1]);;
+- : int list = [4; 3; 2; 1; 5]
+
+# try_all_sqA(["l";"u";"r";"d"]);;
+- : bool = true
+# try_all_sqA(["u";"l";"r";"d"]);;
+- : bool = false
+
+# try_all_eqtriA(["m30";"u";"p240"]);;
+- : bool = false
+# try_all_eqtriA(["m30";"m30";"p240";"p240";"u";"u"]);;
+- : bool = true
